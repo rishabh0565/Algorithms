@@ -2,26 +2,78 @@ package com.Main.Arrays;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class test {
 
 	public static void main(String[] args) {
 	
-	//System.out.println(numbers("" , "23456789"));
-	//System.out.println(numberPad("", "6579"));
-	printDiceNumbersForTargetSum("", 80);
+	boolean [][] maze = {
+			{true, true, true},
+			{true, true, true},
+			{true, true, true},
+	};
+	String [][] steps = new String[maze.length][maze[0].length];
+	for(String[] arr: steps) {
+	  for(int i = 0 ; i < arr.length ; i++) {
+		  arr[i] = ".";
+	  }
+	}
+	printMazeWithStepsInAllDirections(maze,"",0,0 ,steps, "*");
+			}
+	
+	
+	
+	
+	static void printMazeWithStepsInAllDirections(boolean[][] maze,String path, int row, int col, String[][] steps, String count) {
+		if(row==maze.length-1 && col==maze[0].length-1) {
+			steps[row][col] = count;
+			for(String[] arr : steps) {
+				System.out.println(Arrays.toString(arr));
+			}
+			System.out.println(path);			
+			return;
+		}
+		
+		if(!maze[row][col]) {
+			return;
+		}
+		steps[row][col] = count;
+		maze[row][col] = false;
+
+		if(row<maze.length-1) {
+			printMazeWithStepsInAllDirections(maze, path+'D', row+1, col, steps, "🡣"
+					+ "");
+		}
+		if(col<maze[0].length-1 && row<maze.length-1) {
+			printMazeWithStepsInAllDirections(maze, path+'X', row+1, col+1, steps, "🡮");
+		}
+	
+		if(col<maze[0].length-1) {
+			printMazeWithStepsInAllDirections(maze, path+'R', row, col+1, steps, "🡢");
+		}
+		if(col>0) {
+			printMazeWithStepsInAllDirections(maze, path+'L', row, col-1, steps, "←");
+		}
+		if(row>0) {
+			printMazeWithStepsInAllDirections(maze, path+'U', row-1, col, steps, "🡡");
+		}
+		
+		steps[row][col] = ".";
+		maze[row][col] = false;
+		
 	}
 	
-	
-	public static void printDiceNumbersForTargetSum(String ans, int target) {
-		if(target == 0 ) {
+	static void printDiceNumberForGivenNumber(String ans , int target) {
+		if(target == 0) {
 			System.out.println(ans);
 			return;
 		}
-		for(int i = 1 ; i <=6 && i<=target; i++) {
-			printDiceNumbersForTargetSum(ans+i, target-i);
+		for(int i = 1; i <=6 && i<=target ; i++) {
+			printDiceNumberForGivenNumber(ans+i, target-i);
 		}
+		
 	}
 
 	public static List<String> numberPad(String left , String right) {
