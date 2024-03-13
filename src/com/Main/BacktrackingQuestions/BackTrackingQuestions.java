@@ -9,6 +9,9 @@ public class BackTrackingQuestions {
 System.out.println(queenPlacement(board, 0));
 	}
 	
+	
+	
+	
 	public static int queenPlacement(boolean[][] board, int rows) {
 		if(rows == board.length) {
 			display(board);
@@ -27,19 +30,21 @@ System.out.println(queenPlacement(board, 0));
 	}
 
 	private static boolean isSafe(boolean[][] board, int rows, int col) {
-	      for(int i = 0 ; i<rows ; i++) {
+	   
+		//vertcal column check for queen
+		for(int i = 0 ; i<rows ; i++) {
 	    	  if(board[i][col]) {
 	    		  return false;
 	    	  }
 	      }
-	      
+	      //left diagonal check for queen by taking  minimum of row, col. 
 		int leftRange = Math.min(rows, col);
 		for(int i = 1 ; i<=leftRange  ;i++ ) {
 			if(board[rows-1][col-1]) {
 				return false;
 			}
 		}
-		
+		// right diagonal check 
 		int rightRange = Math.min(rows, board.length-1-col);
 		for(int i = 1 ; i<=rightRange  ;i++ ) {
 			if(board[rows-i][col+i]) {
